@@ -29,6 +29,16 @@ class UserService {
         });
         return user;
     }
+    async getOne(id) {
+        if (!id) {
+            throw new Error('не указан ID')
+        }
+        const user = await User.findByPk(id);
+        const auth =  await Auth.findByPk(user.authId)
+        user.dataValues.email = auth.email;
+        user.dataValues.password = auth.password;
+        return user;
+    }
 }
 
 export default new UserService();

@@ -15,7 +15,7 @@ const Auth = sequelize.define("auth", {
     email: {type: DataTypes.STRING},
     password: {type: DataTypes.STRING}
 })
-User.hasOne(Auth);
+//User.hasOne(Auth);
 User.belongsTo(Auth);
 export {User, Auth}
 
