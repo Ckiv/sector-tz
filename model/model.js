@@ -7,7 +7,7 @@ const User = sequelize.define("user", {
     lastname: {type: DataTypes.STRING},
     dateregister: {type: DataTypes.DATE},
     gender: {type: DataTypes.STRING},
-    idauth: {type: DataTypes.INTEGER}
+    authId: {type: DataTypes.INTEGER}
 })
 
 const Auth = sequelize.define("auth", {
@@ -15,6 +15,7 @@ const Auth = sequelize.define("auth", {
     email: {type: DataTypes.STRING},
     password: {type: DataTypes.STRING}
 })
+User.hasOne(Auth);
 User.belongsTo(Auth);
 export {User, Auth}
 

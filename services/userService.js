@@ -11,7 +11,23 @@ class UserService {
                     })
             });
         return user;
-
+    }
+    async update(id, name, lastname, gender, email) {
+        if (!id) {
+            throw new Error('не указан ID')
+        }
+        const user =  await User.update({ name: name, lastname: lastname, gender: gender }, {
+            where: {
+                id: id
+            }
+        });
+        const idUser = await User.findByPk(id);
+        const auth =  await Auth.update({ email: email}, {
+            where: {
+                id: idUser.authId
+            }
+        });
+        return user;
     }
 }
 
