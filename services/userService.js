@@ -33,11 +33,25 @@ class UserService {
         if (!id) {
             throw new Error('не указан ID')
         }
-        const user = await User.findByPk(id);
-        const auth =  await Auth.findByPk(user.authId)
-        user.dataValues.email = auth.email;
-        user.dataValues.password = auth.password;
+        const user = await User.findByPk(id, {
+            include: [{
+                model: Auth,
+                attributes: ["email", "password"]
+            }]
+        });
         return user;
+    }
+    async getAll (page) {
+        page = page || 1;
+        let limit = 10;
+        let offset = page * limit - limit;
+        const users = await User.findAndCountAll({
+            include: [{
+                model: Auth,
+                attributes: ["email", "password"]
+            }], limit, offset
+        });
+        return users;
     }
 }
 

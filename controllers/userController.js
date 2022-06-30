@@ -28,6 +28,15 @@ class UserController{
             res.status(500).json(e)
         }
     }
+    async getAll(req, res) {
+        let {page} = req.query;
+        try {
+            const users = await UserService.getAll(page);
+            return res.json(users)
+        } catch (e) {
+            res.status(500).json(e)
+        }
+    }
 }
 
 export default new UserController();
